@@ -12,6 +12,10 @@ jobs:
   build-ngx-tst-img:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

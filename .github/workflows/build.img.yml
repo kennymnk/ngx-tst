@@ -1,0 +1,33 @@
+name: Build ngx-tst image
+
+on:
+  push:
+    branches:
+      - release
+
+env:
+  IMG_BASE: "ghcr.io/kennymnk/ngx-tst"
+
+jobs:
+  build-ngx-tst-img:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Login Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build - Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMG_BASE }}:latest
+
